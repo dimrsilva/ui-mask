@@ -1,13 +1,4 @@
-angular.module('ui.mask.service', []).factory('uiMask', uiMaskFactory)
-        .value('uiMaskConfig', {
-            maskDefinitions: {
-                '9': /\d/,
-                'A': /[a-zA-Z]/,
-                '*': /[a-zA-Z0-9]/
-            },
-            clearOnBlur: true,
-            eventsToHandle: ['input', 'keyup', 'click', 'focus']
-        });
+angular.module('ui.mask.service', ['ui.mask.config']).factory('$uiMask', uiMaskFactory);
 
 function uiMaskFactory(uiMaskConfig) {
 	return {
@@ -15,18 +6,25 @@ function uiMaskFactory(uiMaskConfig) {
 			var maskCaretMap,
 				maskPatterns;
 
-			initMask();
 
-			return {
-				mask: mask,
-				unmask: unmask,
-				isValid: isValid,
-			};
+            if (isValidMask()) {
+                initMask();
+
+                return {
+                    mask: mask,
+                    unmask: unmask,
+                    isValid: isValid,
+                };
+            }
+            else {
+                return null;
+            }
+
+            function isValidMask() {
+                return typeof maskDefinition === "string" && maskDefinition.length > 0;
+            }
 
 			function initMask() {
-				if(typeof maskDefinition === "String") {
-					throw "Invalid maskDefinition";
-				}
 				maskOptions = uiMaskConfig;
 				processRawMask();
 			}

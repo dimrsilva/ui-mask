@@ -23,16 +23,16 @@ function uiMaskDirective($uiMask) {
             mask = $uiMask.create(uiMaskAttr);
             if (mask !== null) {
                 bindEventListeners();
-                ngModel.$setViewValue(mask.mask(ngModel.$modelValue));
-                ngModel.$rollbackViewValue();
+                ngModel.$viewValue = mask.mask(ngModel.$viewValue);
+                ngModel.$render();
             }
         }
 
         function uninitialize() {
             if (mask !== null) {
                 unbindEventListeners();
-                ngModel.$setViewValue(mask.unmask(ngModel.$viewValue));
-                ngModel.$rollbackViewValue();
+                ngModel.$viewValue = mask.unmask(ngModel.$viewValue);
+                ngModel.$render();
             }
             mask = null;
         }

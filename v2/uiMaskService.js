@@ -30,6 +30,7 @@ function uiMaskFactory(uiMaskConfig) {
 			}
 
 			function mask(rawValue) {
+                rawValue = rawValue || '';
                 var valueMasked = '',
                     rvi = 0, //rawValueIndex
                     mki = 0; // maskCaretMapIndex
@@ -53,6 +54,7 @@ function uiMaskFactory(uiMaskConfig) {
 			}
 
 			function unmask(maskedValue) {
+                maskedValue = maskedValue || '';
                 var valueUnmasked = '',
                     mpi = 0; // maskPatternsIndex
 
